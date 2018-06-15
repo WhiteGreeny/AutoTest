@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="xyz.view.controller.MainWindowController">
+   <children>
+      <SplitPane dividerPositions="0.34782608695652173" layoutX="72.0" layoutY="61.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <TableView fx:id="scriptTable" layoutX="3.0" layoutY="14.0" prefHeight="398.0" prefWidth="205.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columns>
+                      <TableColumn fx:id="nameCol" prefWidth="204.0" text="可选脚本" />
+                    </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <SplitPane dividerPositions="0.5" layoutX="12.0" layoutY="150.0" orientation="VERTICAL" prefHeight="398.0" prefWidth="387.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <items>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                           <children>
+                              <HBox layoutX="22.0" layoutY="32.0" spacing="10.0">
+                                 <children>
+                                    <HBox alignment="CENTER" layoutX="22.0" layoutY="32.0" spacing="10.0">
+                                       <children>
+                                          <Label layoutX="29.0" layoutY="24.0" text="执行次数 : " />
+                                          <TextField fx:id="timesField" layoutX="89.0" layoutY="20.0" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" layoutX="22.0" layoutY="68.0" spacing="10.0">
+                                 <children>
+                                    <Label layoutX="22.0" layoutY="72.0" text="输出路径 : " />
+                                    <TextField fx:id="outpathField" layoutX="90.0" layoutY="68.0" prefHeight="23.0" prefWidth="216.0" />
+                                    <Button fx:id="outpathChooseButton" layoutX="266.0" layoutY="68.0" mnemonicParsing="false" onAction="#outpathChooser" prefHeight="23.0" prefWidth="58.0" text="选择" />
+                                 </children>
+                              </HBox>
+                              <Button fx:id="startButton" layoutX="105.0" layoutY="141.0" mnemonicParsing="false" onAction="#startHandler" prefHeight="40.0" prefWidth="88.0" text="Start" />
+                              <HBox alignment="CENTER" layoutX="22.0" layoutY="98.0" spacing="10.0">
+                                 <children>
+                                    <Label layoutX="22.0" layoutY="102.0" text="脚本路径 : " />
+                                    <TextField fx:id="scriptDirField" layoutX="90.0" layoutY="98.0" prefHeight="23.0" prefWidth="216.0" />
+                                    <Button fx:id="scriptDirChooseButton" layoutX="316.0" layoutY="98.0" mnemonicParsing="false" onAction="#scriptDirChooser" prefHeight="23.0" prefWidth="58.0" text="选择" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                           <children>
+                              <Button fx:id="addButton" layoutX="29.0" layoutY="25.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="66.0" text="新增" />
+                              <Button fx:id="deleteButton" layoutX="29.0" layoutY="67.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="66.0" text="删除" />
+                              <Button fx:id="refreshButton" layoutX="29.0" layoutY="111.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="66.0" text="刷新" />
+                           </children>
+                        </AnchorPane>
+                    </items>
+                  </SplitPane>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

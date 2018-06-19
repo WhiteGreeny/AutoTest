@@ -36,8 +36,8 @@
                   <HBox alignment="CENTER" layoutX="20.0" layoutY="116.0" spacing="10.0" AnchorPane.leftAnchor="20.0">
                      <children>
                         <Label layoutX="27.0" layoutY="100.0" prefWidth="60.0" text="坐  标 : " />
-                        <TextField layoutX="107.0" layoutY="96.0" prefHeight="23.0" prefWidth="36.0" fx:id="xField" />
-                        <TextField fx:id="yField" layoutX="158.0" layoutY="96.0" prefHeight="23.0" prefWidth="36.0" />
+                        <TextField layoutX="107.0" layoutY="96.0" prefHeight="23.0" prefWidth="60.0" fx:id="xField" />
+                        <TextField fx:id="yField" layoutX="158.0" layoutY="96.0" prefHeight="23.0" prefWidth="60.0" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" layoutX="20.0" layoutY="151.0" spacing="10.0" AnchorPane.leftAnchor="20.0">
@@ -86,11 +86,15 @@
                      <children>
                         <Button mnemonicParsing="false" onAction="#handleAddOperation" prefHeight="23.0" prefWidth="53.0" text="增加" />
                         <Button layoutX="20.0" layoutY="302.0" mnemonicParsing="false" onAction="#handleRefresh" prefHeight="23.0" prefWidth="53.0" text="刷新" />
-                        <Button layoutX="103.0" layoutY="302.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="53.0" text="删除" />
-                        <Button layoutX="185.0" layoutY="302.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="53.0" text="修改" />
+                        <Button layoutX="103.0" layoutY="302.0" mnemonicParsing="false" onAction="#handleDelete" prefHeight="23.0" prefWidth="53.0" text="删除" />
+                        <Button layoutX="185.0" layoutY="302.0" mnemonicParsing="false" onAction="#handleEdit" prefHeight="23.0" prefWidth="53.0" text="修改" />
                      </children>
                   </HBox>
-                  <Button layoutX="96.0" layoutY="345.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="91.0" text="完成" />
+                  <Button layoutX="234.0" layoutY="345.0" mnemonicParsing="false" onAction="#handleSave" prefHeight="33.0" prefWidth="58.0" text="保存" />
+                  <Label fx:id="fileNameLabel" layoutX="21.0" layoutY="338.0" text="脚本名称 : " />
+                  <TextField fx:id="fileNameField" layoutX="21.0" layoutY="353.0" prefHeight="23.0" prefWidth="200.0" />
+                  <Separator layoutX="-3.0" layoutY="334.0" prefHeight="6.0" prefWidth="374.0" />
+                  <Button layoutX="302.0" layoutY="345.0" mnemonicParsing="false" onAction="#handleCancle" prefHeight="33.0" prefWidth="58.0" text="取消" />
                </children></AnchorPane>
         </items>
       </SplitPane>

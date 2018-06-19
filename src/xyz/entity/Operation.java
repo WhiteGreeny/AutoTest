@@ -4,7 +4,9 @@ import javafx.beans.property.SimpleStringProperty;
 import xyz.functions.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Operation {
     private SimpleStringProperty no;
@@ -19,8 +21,8 @@ public class Operation {
     private boolean screenShot;
 
     public Operation(){
-        this.no=new SimpleStringProperty("0");
-        this.name=new SimpleStringProperty("00");
+        this.no=new SimpleStringProperty();
+        this.name=new SimpleStringProperty();
     }
     public Operation(String no, String name, OperationType type, Position pos, int times, boolean doubleC, boolean choices, int height, int range, boolean screenShot) {
         this.no = new SimpleStringProperty(no);
@@ -57,7 +59,7 @@ public class Operation {
         for (int num = 0x01; num <= 0xff; num++) {
             String key = String.format("%02x", num);
             if (!jsnObj.has(key)) {
-                break;
+                continue;
             }
             JSONObject subObj = jsnObj.getJSONObject(key);
             if (subObj != null) {
@@ -68,6 +70,37 @@ public class Operation {
             }
         }
         return list.size() > 0 ? list : null;
+    }
+    public JSONObject operationToJSONObj(){
+        JSONObject jsonObject=new JSONObject();
+        jsonObject.put("no",getNo());
+        jsonObject.put("name",getName());
+        jsonObject.put("type",getType().toString());
+        jsonObject.put("pos",getPos().toString());
+        jsonObject.put("times",getTimes());
+        jsonObject.put("doubleC",isDoubleC());
+        jsonObject.put("choices",isChoices());
+        jsonObject.put("screenshot",isScreenShot());
+        jsonObject.put("height",getHeight());
+        jsonObject.put("range",getRange());
+        return jsonObject;
+    }
+    public static Map<String,Operation> getMapByJSONObj(JSONObject jsnObj){
+        Map<String,Operation> map=new HashMap<>();
+        for (int num = 0x01; num <= 0xff; num++) {
+            String key = String.format("%02x", num).toUpperCase();
+            if (!jsnObj.has(key)) {
+                continue;
+            }
+            JSONObject subObj = jsnObj.getJSONObject(key);
+            if (subObj != null) {
+                Operation temp = Operation.getInstanceByJSONObj(subObj);
+                if (temp != null) {
+                    map.put(key,temp);
+                }
+            }
+        }
+        return map.size() > 0 ? map : null;
     }
 
     public static boolean operationsToJSON(List<Operation> list) {

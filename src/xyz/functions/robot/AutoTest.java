@@ -88,7 +88,7 @@ public class AutoTest {
         switch (operation.getType()) {
             case CHOICE:
             case BUTTON:
-                pos = posMap.get(operation.getName());
+                pos = operation.getPos();
                 if (operation.isChoices()) {
                     pos = magic.getNextValidChoicePos(pos, range, operation.getHeight());
                 }
@@ -101,7 +101,7 @@ public class AutoTest {
                 }
                 return "";
             case MONEY:
-                pos = posMap.get(operation.getName());
+                pos = operation.getPos();
                 if(pos==null){
                     return "can not get valid position\n";
                 }

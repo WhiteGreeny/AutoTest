@@ -5,6 +5,9 @@ import javafx.beans.property.SimpleStringProperty;
 public class ScriptObject {
     private SimpleStringProperty name;
     private String filePath;
+    public ScriptObject(){
+        name=new SimpleStringProperty();
+    }
     public ScriptObject(String name,String filePath){
         this.name=new SimpleStringProperty(name);
         this.filePath=filePath;

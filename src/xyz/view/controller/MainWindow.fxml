@@ -57,6 +57,7 @@
                               <Button fx:id="addButton" layoutX="29.0" layoutY="25.0" mnemonicParsing="false" onAction="#handleAdd" prefHeight="23.0" prefWidth="66.0" text="新增" />
                               <Button fx:id="deleteButton" layoutX="29.0" layoutY="67.0" mnemonicParsing="false" onAction="#handleDelete" prefHeight="23.0" prefWidth="66.0" text="删除" />
                               <Button fx:id="refreshButton" layoutX="29.0" layoutY="111.0" mnemonicParsing="false" onAction="#handleRefresh" prefHeight="23.0" prefWidth="66.0" text="刷新" />
+                              <Button layoutX="29.0" layoutY="152.0" mnemonicParsing="false" onAction="#handleEdit" prefHeight="23.0" prefWidth="66.0" text="修改" />
                            </children>
                         </AnchorPane>
                     </items>

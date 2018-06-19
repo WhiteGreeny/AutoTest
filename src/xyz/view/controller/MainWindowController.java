@@ -9,14 +9,15 @@ import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import org.apache.commons.io.FileUtils;
+import xyz.entity.Operation;
 import xyz.entity.ScriptObject;
+import xyz.functions.json.JSONObject;
 import xyz.functions.robot.AutoTest;
 
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
 import java.util.List;
 
 public class MainWindowController {
@@ -48,6 +49,12 @@ public class MainWindowController {
     private File outpath;
     private File scriptDir;
     private AutoTest robot;
+    private Main mainApp;
+
+    public MainWindowController(){}
+    public void setMainApp(Main mainApp){
+        this.mainApp=mainApp;
+    }
 
     @FXML
     private void initialize(){
@@ -88,6 +95,7 @@ public class MainWindowController {
             scriptDir=chooser.showDialog(new Stage());
             if(scriptDir!=null){
                 scriptDirField.setText(scriptDir.getPath());
+                this.handleRefresh();
             }else{
                 scriptDir=new File("./script");
                 if(!scriptDir.exists()){
@@ -102,16 +110,90 @@ public class MainWindowController {
     @FXML
     private void handleStart(){
         if(!emptyCheck()){
-
+            try {
+                ScriptObject script=scriptTable.getSelectionModel().getSelectedItem();
+                File file=new File(script.getFilePath());
+                String content=FileUtils.readFileToString(file,"UTF-8");
+                JSONObject jsnObj=new JSONObject(content);
+                List<Operation> list=Operation.getInstListByJSONObj(jsnObj);
+                AutoTest robot=new AutoTest();
+                robot.setOutPath(outpath);
+                String message=robot.executeOperations(list,true);
+                if(message.length()>0){
+                    showAlert(Alert.AlertType.ERROR,"错误信息如下：",message);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (AWTException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
     @FXML
     private void handleAdd(){
+        if(scriptDir==null){
+            showAlert(Alert.AlertType.ERROR,"脚本路径不可为空","");
+            return;
+        }
+        Map<String,Operation> map=new HashMap<>();
+        ScriptObject script=new ScriptObject();
+        if(mainApp.showEditWindow(map,false,script)){
+            String fileName=script.getName();
+            try {
+                script.setFilePath(scriptDir.getCanonicalPath()+"\\"+fileName);
+                if(fileName!=null){
+                    JSONObject jsnObj=new JSONObject();
+                    for(String key:map.keySet()){
+                        jsnObj.put(key,map.get(key).operationToJSONObj());
+                    }
+                    FileUtils.write(new File(script.getFilePath()),jsnObj.toString(),"UTF-8",false);
+                    handleRefresh();
+                }else{
+                    System.out.println("null");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }/*else{
+            showAlert(Alert.AlertType.ERROR,"新增失败","");
+        }*/
 
     }
     @FXML
     private void handleDelete(){
 
+    }
+    @FXML
+    private void handleEdit(){
+        try {
+            ScriptObject script=scriptTable.getSelectionModel().getSelectedItem();
+            if(script!=null){
+                String content=FileUtils.readFileToString(new File(script.getFilePath()),"UTF-8");
+                JSONObject jsnObj=new JSONObject(content);
+                Map<String ,Operation> map=Operation.getMapByJSONObj(jsnObj);
+                if(mainApp.showEditWindow(map,true,script)){
+                    if(map!=null){
+                        jsnObj=new JSONObject();
+                        for(String key:map.keySet()){
+                            jsnObj.put(key,map.get(key).operationToJSONObj());
+                        }
+                        FileUtils.write(new File(script.getFilePath()),jsnObj.toString(),"UTF-8",false);
+                    }else{
+                        showAlert(Alert.AlertType.ERROR,"映射为空","");
+                    }
+                }/*else{
+                    showAlert(Alert.AlertType.ERROR,"修改失败","");
+                }*/
+                handleRefresh();
+            }else{
+                showAlert(Alert.AlertType.WARNING,"请选中一条记录","");
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     @FXML
     private void handleRefresh(){
@@ -120,6 +202,7 @@ public class MainWindowController {
         }else{
             String[] extentions={"json"};
             Collection<File> fileList= FileUtils.listFiles(scriptDir,extentions,false);
+            scriptList.clear();
             try {
                 for(File file:fileList){
                     scriptList.add(new ScriptObject(file.getName(),file.getCanonicalPath()));

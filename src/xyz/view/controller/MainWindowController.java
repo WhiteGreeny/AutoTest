@@ -1,5 +1,6 @@
 package xyz.view.controller;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -7,17 +8,20 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+import org.apache.commons.io.FileUtils;
 import xyz.entity.ScriptObject;
 import xyz.functions.robot.AutoTest;
 
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class MainWindowController {
     @FXML
-    private TableView<String> scriptTable;
+    private TableView<ScriptObject> scriptTable;
     @FXML
     private TableColumn<ScriptObject,String> nameCol;
     @FXML
@@ -50,6 +54,7 @@ public class MainWindowController {
         nameCol.setCellValueFactory(cellData->cellData.getValue().nameProperty());
         outpathField.setEditable(false);
         scriptDirField.setEditable(false);
+        scriptList=new ArrayList<>();
         try {
             robot=new AutoTest();
         } catch (AWTException e) {
@@ -82,7 +87,7 @@ public class MainWindowController {
             chooser.setInitialDirectory(new File("."));
             scriptDir=chooser.showDialog(new Stage());
             if(scriptDir!=null){
-                scriptDirField.setText(outpath.getPath());
+                scriptDirField.setText(scriptDir.getPath());
             }else{
                 scriptDir=new File("./script");
                 if(!scriptDir.exists()){
@@ -95,17 +100,36 @@ public class MainWindowController {
         }
     }
     @FXML
-    private void startHandler(){
-        if(emptyCheck()){
+    private void handleStart(){
+        if(!emptyCheck()){
 
         }
     }
     @FXML
-    private void addHandler(){
+    private void handleAdd(){
 
     }
     @FXML
-    private void deleteHandler(){
+    private void handleDelete(){
+
+    }
+    @FXML
+    private void handleRefresh(){
+        if(scriptDir==null){
+            showAlert(Alert.AlertType.ERROR,null,"脚本目录不可为空");
+        }else{
+            String[] extentions={"json"};
+            Collection<File> fileList= FileUtils.listFiles(scriptDir,extentions,false);
+            try {
+                for(File file:fileList){
+                    scriptList.add(new ScriptObject(file.getName(),file.getCanonicalPath()));
+                }
+                obsScriptList=FXCollections.observableList(scriptList);
+                scriptTable.setItems(obsScriptList);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
     }
     private boolean emptyCheck(){
@@ -120,14 +144,17 @@ public class MainWindowController {
             sb.append("执行次数不可为空\n");
         }
         if(sb.length()<=0){
-            return true;
-        }else{
-            Alert alert =new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("请检查输入");
-            alert.setContentText(sb.toString());
-            alert.showAndWait();
             return false;
+        }else{
+            showAlert(Alert.AlertType.ERROR,null,sb.toString());
+            return true;
         }
+    }
+    private void showAlert(Alert.AlertType type,String header,String content){
+        Alert alert =new Alert(type);
+        alert.setHeaderText(header==null?"请检查输入":header);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 
 }

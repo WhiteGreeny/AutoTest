@@ -1,13 +1,16 @@
 package xyz.entity;
 
+import javafx.beans.property.SimpleStringProperty;
 import xyz.functions.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Operation {
-    private String name;
+    private SimpleStringProperty no;
+    private SimpleStringProperty name;
     private OperationType type;
+    private Position pos;
     private int times;
     private boolean doubleC;
     private boolean choices;
@@ -15,21 +18,29 @@ public class Operation {
     private int range;
     private boolean screenShot;
 
-    public Operation(String name, OperationType type, int times, boolean doubleC, boolean choices, int height, int range,boolean screenShot) {
-        this.name = name;
+    public Operation(){
+        this.no=new SimpleStringProperty("0");
+        this.name=new SimpleStringProperty("00");
+    }
+    public Operation(String no, String name, OperationType type, Position pos, int times, boolean doubleC, boolean choices, int height, int range, boolean screenShot) {
+        this.no = new SimpleStringProperty(no);
+        this.name = new SimpleStringProperty(name);
         this.type = type;
         this.times = times;
         this.doubleC = doubleC;
         this.choices = choices;
-        this.height=height;
-        this.range=range;
-        this.screenShot=screenShot;
+        this.height = height;
+        this.range = range;
+        this.screenShot = screenShot;
+        this.pos = pos;
     }
 
     public static Operation getInstanceByJSONObj(JSONObject jsonObj) {
-        if(jsonObj.getString("name")!=null&&jsonObj.getString("name").trim().length()>0){
-            return new Operation(jsonObj.getString("name"),
+        if (jsonObj.getString("name") != null && jsonObj.getString("name").trim().length() > 0) {
+            return new Operation(jsonObj.getString("no"),
+                    jsonObj.getString("name"),
                     OperationType.valueOf(jsonObj.getString("type").toUpperCase()),
+                    Position.string2Pos(jsonObj.getString("pos")),
                     jsonObj.getInt("times"),
                     jsonObj.getBoolean("doubleC"),
                     jsonObj.getBoolean("choices"),
@@ -40,32 +51,51 @@ public class Operation {
         return null;
 
     }
-    public static List<Operation> getInstListByJSONObj(JSONObject jsnObj){
-        List<Operation> list=new ArrayList<>();
-        for(int num=0x01;num<=0xff;num++){
-            String key=String.format("%02x",num);
-            if(!jsnObj.has(key)){
+
+    public static List<Operation> getInstListByJSONObj(JSONObject jsnObj) {
+        List<Operation> list = new ArrayList<>();
+        for (int num = 0x01; num <= 0xff; num++) {
+            String key = String.format("%02x", num);
+            if (!jsnObj.has(key)) {
                 break;
             }
-            JSONObject subObj=jsnObj.getJSONObject(key);
-            if(subObj!=null){
-                Operation temp=Operation.getInstanceByJSONObj(subObj);
-                if(temp!=null){
+            JSONObject subObj = jsnObj.getJSONObject(key);
+            if (subObj != null) {
+                Operation temp = Operation.getInstanceByJSONObj(subObj);
+                if (temp != null) {
                     list.add(temp);
                 }
             }
         }
-        return list.size()>0?list:null;
+        return list.size() > 0 ? list : null;
     }
-    public static boolean operationsToJSON(List<Operation> list){
+
+    public static boolean operationsToJSON(List<Operation> list) {
         return true;
     }
+
+    public String getNo() {
+        return no.get();
+    }
+
+    public SimpleStringProperty noProperty() {
+        return no;
+    }
+
+    public void setNo(String no) {
+        this.no.set(no);
+    }
+
     public String getName() {
+        return name.get();
+    }
+
+    public SimpleStringProperty nameProperty() {
         return name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name.set(name);
     }
 
     public OperationType getType() {
@@ -122,5 +152,13 @@ public class Operation {
 
     public void setScreenShot(boolean screenShot) {
         this.screenShot = screenShot;
+    }
+
+    public Position getPos() {
+        return pos;
+    }
+
+    public void setPos(Position pos) {
+        this.pos = pos;
     }
 }

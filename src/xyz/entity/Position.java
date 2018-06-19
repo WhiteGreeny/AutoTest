@@ -17,7 +17,12 @@ public class Position {
      * @return position obj
      */
     public static Position string2Pos(String posStr){
-        String str=posStr.substring(1,posStr.length()-1);
+        String str=null;
+        if(posStr.contains("(")){
+            str=posStr.substring(1,posStr.length()-1);
+        }else{
+            str=posStr;
+        }
         String[] strArr=str.split(",");
         return new Position(Integer.parseInt(strArr[0]),Integer.parseInt(strArr[1]));
     }

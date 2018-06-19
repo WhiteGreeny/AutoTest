@@ -100,7 +100,7 @@ public class AutoTest {
                     magic.mouseClick(pos,operation.isDoubleC(),delay);
                 }
                 return "";
-            case TEXTMONEY:
+            case MONEY:
                 pos = posMap.get(operation.getName());
                 if(pos==null){
                     return "can not get valid position\n";

@@ -6,96 +6,127 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="xyz.view.controller.AddWindowController">
+<AnchorPane prefHeight="782.0" prefWidth="1635.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="xyz.view.controller.AddWindowController">
    <children>
-      <SplitPane dividerPositions="0.3695652173913043" layoutX="100.0" layoutY="78.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane dividerPositions="0.9289693593314763" layoutX="43.0" layoutY="12.0" orientation="VERTICAL" prefHeight="720.0" prefWidth="1024.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
-                  <TableView fx:id="operationTable" layoutX="14.0" layoutY="41.0" prefHeight="398.0" prefWidth="218.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                    <columns>
-                      <TableColumn fx:id="noCol" prefWidth="72.0" text="序号" />
-                      <TableColumn fx:id="nameCol" prefWidth="145.0" text="操作" />
-                    </columns>
-                  </TableView>
-               </children></AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                  <SplitPane dividerPositions="0.21397915389331698" layoutX="516.0" layoutY="24.0" prefHeight="664.0" prefWidth="1022.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <items>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                           <children>
+                              <SplitPane dividerPositions="0.5181818181818182" layoutX="52.0" layoutY="164.0" orientation="VERTICAL" prefHeight="720.0" prefWidth="346.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <items>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                       <children>
+                                          <TableView fx:id="operationTable" layoutX="-44.0" layoutY="22.0" prefHeight="369.0" prefWidth="344.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <columns>
+                                              <TableColumn fx:id="noCol" prefWidth="72.0" text="序号" />
+                                              <TableColumn fx:id="nameCol" prefWidth="278.0" text="操作" />
+                                            </columns>
+                                          </TableView>
+                                       </children>
+                                    </AnchorPane>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="305.0" prefWidth="334.0">
+                                       <children>
+                                          <HBox alignment="CENTER" layoutX="20.0" layoutY="45.0" spacing="10.0" AnchorPane.leftAnchor="20.0">
+                                             <children>
+                                                <Label layoutX="27.0" layoutY="44.0" prefWidth="60.0" text="操  作 : " />
+                                                <TextField fx:id="nameField" layoutX="107.0" layoutY="40.0" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER" layoutX="17.0" layoutY="78.0" spacing="10.0" AnchorPane.leftAnchor="20.0">
+                                             <children>
+                                                <Label layoutX="27.0" layoutY="65.0" prefWidth="60.0" text="类  型 : " />
+                                                <ChoiceBox fx:id="type" layoutX="107.0" layoutY="61.0" prefWidth="150.0" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER" layoutX="20.0" layoutY="116.0" spacing="10.0" AnchorPane.leftAnchor="20.0">
+                                             <children>
+                                                <Label layoutX="27.0" layoutY="100.0" prefWidth="60.0" text="坐  标 : " />
+                                                <TextField layoutX="107.0" layoutY="96.0" prefHeight="23.0" prefWidth="60.0" fx:id="xField" />
+                                                <TextField fx:id="yField" layoutX="158.0" layoutY="96.0" prefHeight="23.0" prefWidth="60.0" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER" layoutX="20.0" layoutY="151.0" spacing="10.0" AnchorPane.leftAnchor="20.0">
+                                             <children>
+                                                <Label layoutX="27.0" layoutY="135.0" prefWidth="60.0" text="次  数 : " />
+                                                <TextField fx:id="timesField" layoutX="89.0" layoutY="139.0" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER" layoutX="20.0" layoutY="191.0" spacing="10.0" AnchorPane.leftAnchor="20.0">
+                                             <children>
+                                                <Label layoutX="29.0" layoutY="164.0" prefWidth="60.0" text="双  击 : " />
+                                                <CheckBox fx:id="isDoubleClick" layoutX="89.0" layoutY="164.0" mnemonicParsing="false" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER" layoutX="127.0" layoutY="191.0" spacing="10.0" AnchorPane.leftAnchor="127.0">
+                                             <children>
+                                                <Label layoutX="29.0" layoutY="192.0" prefWidth="60.0" text="随机选择 : " />
+                                                <CheckBox fx:id="isRandomChoices" layoutX="93.0" layoutY="191.0" mnemonicParsing="false" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER" layoutX="31.0" layoutY="218.0" spacing="10.0" AnchorPane.leftAnchor="20.0">
+                                             <children>
+                                                <Label layoutX="31.0" layoutY="222.0" prefWidth="60.0" text="文本高度 : " />
+                                                <TextField fx:id="heightField" layoutX="100.0" layoutY="218.0" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER" layoutX="29.0" layoutY="252.0" spacing="10.0" AnchorPane.leftAnchor="20.0">
+                                             <children>
+                                                <Label layoutX="29.0" layoutY="252.0" prefWidth="60.0" text="选择范围 : " />
+                                                <TextField fx:id="rangeField" layoutX="100.0" layoutY="256.0" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER" layoutX="240.0" layoutY="191.0" spacing="10.0" AnchorPane.leftAnchor="240.0">
+                                             <children>
+                                                <Label layoutX="29.0" layoutY="283.0" prefWidth="60.0" text="是否截图 : " />
+                                                <CheckBox fx:id="isScreenShot" layoutX="101.0" layoutY="283.0" mnemonicParsing="false" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER" layoutX="29.0" layoutY="16.0" spacing="10.0" AnchorPane.leftAnchor="20.0">
+                                             <children>
+                                                <Label layoutX="29.0" layoutY="20.0" prefWidth="60.0" text="序  号 : " />
+                                                <TextField fx:id="noField" layoutX="107.0" layoutY="16.0" />
+                                             </children>
+                                          </HBox>
+                                          <HBox layoutX="22.0" layoutY="284.0" spacing="30.0">
+                                             <children>
+                                                <Button mnemonicParsing="false" onAction="#handleAddOperation" prefHeight="23.0" prefWidth="53.0" text="增加" />
+                                                <Button layoutX="20.0" layoutY="302.0" mnemonicParsing="false" onAction="#handleRefresh" prefHeight="23.0" prefWidth="53.0" text="刷新" />
+                                                <Button layoutX="103.0" layoutY="302.0" mnemonicParsing="false" onAction="#handleDelete" prefHeight="23.0" prefWidth="53.0" text="删除" />
+                                                <Button layoutX="185.0" layoutY="302.0" mnemonicParsing="false" onAction="#handleEdit" prefHeight="23.0" prefWidth="53.0" text="修改" />
+                                             </children>
+                                          </HBox>
+                                          <Button layoutX="258.0" layoutY="116.0" mnemonicParsing="false" onAction="#handleImageChoose" text="选择图片" />
+                                       </children>
+                                    </AnchorPane>
+                                </items>
+                              </SplitPane>
+                           </children>
+                        </AnchorPane>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                           <children>
+                              <ScrollPane fx:id="imagePane" layoutX="103.0" layoutY="231.0" onMouseClicked="#handleClick" prefHeight="720.0" prefWidth="1279.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <content>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                                </content>
+                              </ScrollPane>
+                           </children>
+                        </AnchorPane>
+                    </items>
+                  </SplitPane>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
-                  <HBox alignment="CENTER" layoutX="20.0" layoutY="45.0" spacing="10.0" AnchorPane.leftAnchor="20.0">
-                     <children>
-                        <Label layoutX="27.0" layoutY="44.0" prefWidth="60.0" text="操  作 : " />
-                        <TextField fx:id="nameField" layoutX="107.0" layoutY="40.0" />
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" layoutX="17.0" layoutY="78.0" spacing="10.0" AnchorPane.leftAnchor="20.0">
-                     <children>
-                        <Label layoutX="27.0" layoutY="65.0" prefWidth="60.0" text="类  型 : " />
-                        <ChoiceBox fx:id="type" layoutX="107.0" layoutY="61.0" prefWidth="150.0" />
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" layoutX="20.0" layoutY="116.0" spacing="10.0" AnchorPane.leftAnchor="20.0">
-                     <children>
-                        <Label layoutX="27.0" layoutY="100.0" prefWidth="60.0" text="坐  标 : " />
-                        <TextField layoutX="107.0" layoutY="96.0" prefHeight="23.0" prefWidth="60.0" fx:id="xField" />
-                        <TextField fx:id="yField" layoutX="158.0" layoutY="96.0" prefHeight="23.0" prefWidth="60.0" />
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" layoutX="20.0" layoutY="151.0" spacing="10.0" AnchorPane.leftAnchor="20.0">
-                     <children>
-                        <Label layoutX="27.0" layoutY="135.0" prefWidth="60.0" text="次  数 : " />
-                        <TextField fx:id="timesField" layoutX="89.0" layoutY="139.0" />
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" layoutX="20.0" layoutY="191.0" spacing="10.0" AnchorPane.leftAnchor="20.0">
-                     <children>
-                        <Label layoutX="29.0" layoutY="164.0" prefWidth="60.0" text="双  击 : " />
-                        <CheckBox fx:id="isDoubleClick" layoutX="89.0" layoutY="164.0" mnemonicParsing="false" />
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" layoutX="127.0" layoutY="191.0" spacing="10.0" AnchorPane.leftAnchor="127.0">
-                     <children>
-                        <Label layoutX="29.0" layoutY="192.0" prefWidth="60.0" text="随机选择 : " />
-                        <CheckBox fx:id="isRandomChoices" layoutX="93.0" layoutY="191.0" mnemonicParsing="false" />
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" layoutX="31.0" layoutY="218.0" spacing="10.0" AnchorPane.leftAnchor="20.0">
-                     <children>
-                        <Label layoutX="31.0" layoutY="222.0" prefWidth="60.0" text="文本高度 : " />
-                        <TextField fx:id="heightField" layoutX="100.0" layoutY="218.0" />
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" layoutX="29.0" layoutY="252.0" spacing="10.0" AnchorPane.leftAnchor="20.0">
-                     <children>
-                        <Label layoutX="29.0" layoutY="252.0" prefWidth="60.0" text="选择范围 : " />
-                        <TextField fx:id="rangeField" layoutX="100.0" layoutY="256.0" />
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" layoutX="240.0" layoutY="191.0" spacing="10.0" AnchorPane.leftAnchor="240.0">
-                     <children>
-                        <Label layoutX="29.0" layoutY="283.0" prefWidth="60.0" text="是否截图 : " />
-                        <CheckBox fx:id="isScreenShot" layoutX="101.0" layoutY="283.0" mnemonicParsing="false" />
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" layoutX="29.0" layoutY="16.0" spacing="10.0" AnchorPane.leftAnchor="20.0">
-                     <children>
-                        <Label layoutX="29.0" layoutY="20.0" prefWidth="60.0" text="序  号 : " />
-                        <TextField fx:id="noField" layoutX="107.0" layoutY="16.0" />
-                     </children>
-                  </HBox>
-                  <HBox layoutX="21.0" layoutY="299.0" spacing="30.0">
-                     <children>
-                        <Button mnemonicParsing="false" onAction="#handleAddOperation" prefHeight="23.0" prefWidth="53.0" text="增加" />
-                        <Button layoutX="20.0" layoutY="302.0" mnemonicParsing="false" onAction="#handleRefresh" prefHeight="23.0" prefWidth="53.0" text="刷新" />
-                        <Button layoutX="103.0" layoutY="302.0" mnemonicParsing="false" onAction="#handleDelete" prefHeight="23.0" prefWidth="53.0" text="删除" />
-                        <Button layoutX="185.0" layoutY="302.0" mnemonicParsing="false" onAction="#handleEdit" prefHeight="23.0" prefWidth="53.0" text="修改" />
-                     </children>
-                  </HBox>
-                  <Button layoutX="234.0" layoutY="345.0" mnemonicParsing="false" onAction="#handleSave" prefHeight="33.0" prefWidth="58.0" text="保存" />
-                  <Label fx:id="fileNameLabel" layoutX="21.0" layoutY="338.0" text="脚本名称 : " />
-                  <TextField fx:id="fileNameField" layoutX="21.0" layoutY="353.0" prefHeight="23.0" prefWidth="200.0" />
-                  <Separator layoutX="-3.0" layoutY="334.0" prefHeight="6.0" prefWidth="374.0" />
-                  <Button layoutX="302.0" layoutY="345.0" mnemonicParsing="false" onAction="#handleCancle" prefHeight="33.0" prefWidth="58.0" text="取消" />
-               </children></AnchorPane>
+                  <Button layoutX="566.0" layoutY="8.0" mnemonicParsing="false" onAction="#handleSave" prefHeight="33.0" prefWidth="58.0" text="保存" />
+                  <Button layoutX="656.0" layoutY="8.0" mnemonicParsing="false" onAction="#handleCancle" prefHeight="33.0" prefWidth="58.0" text="取消" />
+                  <TextField fx:id="fileNameField" layoutX="332.0" layoutY="10.0" prefHeight="23.0" prefWidth="200.0" />
+                  <Label fx:id="fileNameLabel" layoutX="262.0" layoutY="14.0" text="脚本名称 : " />
+               </children>
+            </AnchorPane>
         </items>
       </SplitPane>
    </children>

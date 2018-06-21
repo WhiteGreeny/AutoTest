@@ -64,6 +64,7 @@ public class Main extends Application {
             controller.setMap(map);
             controller.setScript(script);
             controller.setEdit(edit);
+            dialogStage.setResizable(false);
             dialogStage.showAndWait();
             return controller.isFinish();
         } catch (IOException e) {

@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import org.apache.commons.io.FileUtils;
@@ -112,16 +113,23 @@ public class MainWindowController {
         if(!emptyCheck()){
             try {
                 ScriptObject script=scriptTable.getSelectionModel().getSelectedItem();
-                File file=new File(script.getFilePath());
-                String content=FileUtils.readFileToString(file,"UTF-8");
-                JSONObject jsnObj=new JSONObject(content);
-                List<Operation> list=Operation.getInstListByJSONObj(jsnObj);
-                AutoTest robot=new AutoTest();
-                robot.setOutPath(outpath);
-                String message=robot.executeOperations(list,true);
-                if(message.length()>0){
-                    showAlert(Alert.AlertType.ERROR,"错误信息如下：",message);
+                if(script!=null){
+                    for(int i=0;i<Integer.parseInt(timesField.getText());i++){
+                        File file=new File(script.getFilePath());
+                        String content=FileUtils.readFileToString(file,"UTF-8");
+                        JSONObject jsnObj=new JSONObject(content);
+                        List<Operation> list=Operation.getInstListByJSONObj(jsnObj);
+                        AutoTest robot=new AutoTest();
+                        robot.setOutPath(outpath);
+                        String message=robot.executeOperations(list,true);
+                        if(message.length()>0){
+                            showAlert(Alert.AlertType.ERROR,"错误信息如下：",message);
+                        }
+                    }
+                }else{
+                    showAlert(Alert.AlertType.ERROR,"需要选择一个脚本",null);
                 }
+
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (AWTException e) {

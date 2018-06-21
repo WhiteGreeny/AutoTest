@@ -63,7 +63,7 @@ public class AutoTest {
             if(operation.isScreenShot()){
                 Thread.sleep(2000);
                 String fileName=outPath.getCanonicalPath()+"\\"+dateFormat.format(date)+extention;
-                boolean flag=magic.saveScreenShot(1280,720,new File(fileName));
+                boolean flag=magic.saveScreenShot(1920,1080,new File(fileName));
                 if(!flag){
                     sb.append(operation.getName()).append(" screenshot fail\n");
                 }
@@ -106,7 +106,7 @@ public class AutoTest {
                     return "can not get valid position\n";
                 }
                 magic.mouseDoubleClick(pos);
-                String money= String.format("%.2f",Math.random()*1000000%100000);
+                String money= String.format("%.2f",Math.random()*1000000%10000);
                 magic.pasteString(money);
                 return "";
             default:

@@ -3,18 +3,25 @@ package xyz.view.controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.ImageInput;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import xyz.entity.Operation;
 import xyz.entity.OperationType;
 import xyz.entity.Position;
 import xyz.entity.ScriptObject;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.util.*;
 
 public class AddWindowController {
     @FXML
@@ -49,6 +56,10 @@ public class AddWindowController {
     private TextField fileNameField;
     @FXML
     private Label fileNameLabel;
+    @FXML
+    private ScrollPane imagePane;
+    @FXML
+    private SplitPane editPane;
 
     private List<Operation> list;
     private Map<String, Operation> map;
@@ -59,6 +70,10 @@ public class AddWindowController {
     private String fileName;
     private boolean edit;
     private ScriptObject script;
+    private double imageW;
+    private double imageH;
+    private Image image;
+    private File imageFile;
 
     public AddWindowController(){}
     public boolean isFinish(){
@@ -72,6 +87,21 @@ public class AddWindowController {
     }
     public void setDialogStage(Stage dialogStage){
         this.dialogStage=dialogStage;
+        /*dialogStage.setOnCloseRequest(event -> {
+            if(map.size()>0){
+                String tempName;
+                if(fileNameField.getText()!=null&&fileNameField.getText().trim().length()>0){
+                    tempName=fileNameField.getText();
+                }else{
+                    tempName="Unnamed";
+                }
+                Date now=new Date();
+                tempName=tempName+"autosave"+String.format("%tF_%tR",now,now).replaceAll("-","");
+                fileNameField.setText(tempName);
+                handleSave();
+                showAlert(Alert.AlertType.INFORMATION,"已自动保存","文件名称:"+tempName+".json");
+            }
+        });*/
     }
     public void setOutpath(String outpath){
         this.outpath=outpath;
@@ -102,6 +132,19 @@ public class AddWindowController {
         finish=false;
         edit=false;
         type.setItems(FXCollections.observableArrayList("BUTTON", "CHOICE", "MONEY"));
+        /*InputStream in= null;
+        try {
+            in = new FileInputStream("resource/大圣2.jpg");
+            Image image=new Image(in);
+            imageW=image.getWidth();
+            imageH=image.getHeight();
+            ImageView imageView=new ImageView(image);
+            imagePane.setContent(imageView);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }*/
+
+
     }
 
     @FXML
@@ -197,7 +240,7 @@ public class AddWindowController {
         if(temp!=null){
             temp.setNo(noField.getText().toUpperCase());
             temp.setName(nameField.getText());
-            temp.setPos(new Position(Integer.parseInt(xField.getText()), Integer.parseInt(xField.getText())));
+            temp.setPos(new Position(Integer.parseInt(xField.getText()), Integer.parseInt(yField.getText())));
             temp.setType(OperationType.valueOf(type.getValue().toUpperCase()));
             temp.setTimes(Integer.parseInt(timesField.getText()));
             temp.setDoubleC(isDoubleClick.isSelected());
@@ -206,6 +249,44 @@ public class AddWindowController {
             temp.setHeight(Integer.parseInt(heightField.getText()));
             temp.setRange(Integer.parseInt(rangeField.getText()));
             showOperationDetails(temp);
+        }
+    }
+    @FXML
+    private void handleClick(MouseEvent e){
+        if (imagePane.getContent()!=null) {
+            double w=imageW-imagePane.getViewportBounds().getWidth();
+            double h=imageH-imagePane.getViewportBounds().getHeight();
+            xField.setText(Integer.toString((int)(e.getX()+w*imagePane.getHvalue())));
+            yField.setText(Integer.toString((int)(e.getY()+h*imagePane.getVvalue())));
+        }
+    }
+    @FXML
+    private void handleImageChoose(){
+        FileChooser chooser=new FileChooser();
+        chooser.setTitle("选择一张图片");
+        chooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("JPG","*.jpg"),
+                new FileChooser.ExtensionFilter("BMP","*.bmp"),
+                new FileChooser.ExtensionFilter("PNG","*.png")
+        );
+        if(imageFile!=null){
+            chooser.setInitialDirectory(imageFile.getParentFile());
+        }
+        imageFile=chooser.showOpenDialog(new Stage());
+        if(imageFile!=null){
+            try {
+                InputStream in=new FileInputStream(imageFile);
+                image=new Image(in);
+                ImageView imageView=new ImageView(image);
+                imagePane.setContent(imageView);
+                imageW=image.getWidth();
+                imageH=image.getHeight();
+            } catch (FileNotFoundException e) {
+                showAlert(Alert.AlertType.ERROR,"文件打开失败，可能不存在",null);
+                e.printStackTrace();
+            }
+        }else{
+            showAlert(Alert.AlertType.INFORMATION,"未选择图片",null);
         }
     }
 

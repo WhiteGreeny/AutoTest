@@ -57,7 +57,7 @@ public class Operation {
     public static List<Operation> getInstListByJSONObj(JSONObject jsnObj) {
         List<Operation> list = new ArrayList<>();
         for (int num = 0x01; num <= 0xff; num++) {
-            String key = String.format("%02x", num);
+            String key = String.format("%02x", num).toUpperCase();
             if (!jsnObj.has(key)) {
                 continue;
             }

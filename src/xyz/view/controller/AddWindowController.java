@@ -9,7 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.effect.ImageInput;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import xyz.entity.Operation;
@@ -288,6 +288,24 @@ public class AddWindowController {
         }else{
             showAlert(Alert.AlertType.INFORMATION,"未选择图片",null);
         }
+    }
+    @FXML
+    private void handlePaste(KeyEvent e){
+        if(e.isControlDown()&&e.getCode().equals(KeyCode.V)){
+            Clipboard clipboard=Clipboard.getSystemClipboard();
+            image=(Image)clipboard.getContent(DataFormat.IMAGE);
+            if(image!=null){
+                setImage();
+            }else{
+                showAlert(Alert.AlertType.WARNING,"剪贴板中没有图片",null);
+            }
+        }
+    }
+    private void setImage(){
+        ImageView imageView=new ImageView(image);
+        imagePane.setContent(imageView);
+        imageW=image.getWidth();
+        imageH=image.getHeight();
     }
 
     private boolean emptyCheck() {
